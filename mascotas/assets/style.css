@@ -143,6 +143,15 @@ input:focus-visible, select:focus-visible, .seg input:focus-visible + span, .btn
 .cards a { display: flex; justify-content: space-between; gap: 8px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); font-weight: 700; }
 .cards a:hover { border-color: var(--brand); }
 .cards a small { color: var(--muted); font-weight: 600; }
+.cards.guides a { font-weight: 600; line-height: 1.35; }
+.byline { font-size: .85rem !important; margin-top: 10px !important; }
+.guide-list { list-style: none; padding: 0; margin: 0 0 24px; }
+.guide-list li { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.guide-list a { color: var(--ink); text-decoration: none; font-size: 1.08rem; }
+.guide-list a:hover { color: var(--brand); }
+.guide-list span { color: var(--muted); font-size: .92rem; }
+.content ul, .content ol { padding-left: 22px; }
+.content li { margin-bottom: 6px; }
 details.faq { border-bottom: 1px solid var(--line); padding: 10px 0; }
 details.faq summary { cursor: pointer; font-weight: 700; }
 

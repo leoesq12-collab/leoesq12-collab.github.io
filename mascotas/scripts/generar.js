@@ -58,9 +58,15 @@ function calcFor(b, country) {
   return Core.calculate(Object.assign({}, DEFAULT_INPUT, { species: b.species, weight: b.weight, coat: b.coat, life: b.life }),
     Core.COUNTRIES[country].prices);
 }
+const GUIDES = require("./guias.js")({ Core, money: (v, c) => money(v, c), calcFor });
+
+function guideCards(list) {
+  return `<div class="cards guides">${list.map(g => `<a href="/mascotas/guias/${g.slug}.html">${esc(g.title)}</a>`).join("")}</div>`;
+}
+
 function article(b) { return b.species === "gato" ? "un gato " + b.name.replace(/^Gato /, "") : "un " + b.name; }
 
-function layout({ title, description, pathName, body, jsonLd, current, extraHead }) {
+function layout({ title, description, pathName, body, jsonLd, current, extraHead, ogType }) {
   const url = BASE + pathName;
   return `<!DOCTYPE html>
 <html lang="es-MX">
@@ -70,7 +76,7 @@ function layout({ title, description, pathName, body, jsonLd, current, extraHead
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${url}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${ogType || "website"}">
 <meta property="og:site_name" content="${SITE}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
@@ -92,13 +98,14 @@ ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script
     <a href="/mascotas/"${current === "home" ? ' aria-current="page"' : ""}>Calculadora de gastos</a>
     <a href="/mascotas/comida.html"${current === "food" ? ' aria-current="page"' : ""}>¿Cuánto debe comer?</a>
     <a href="/mascotas/razas/"${current === "breeds" ? ' aria-current="page"' : ""}>Costos por raza</a>
+    <a href="/mascotas/guias/"${current === "guides" ? ' aria-current="page"' : ""}>Guías</a>
   </nav>
 </div></header>
 <main class="wrap">
 ${body}
 </main>
 <footer class="site-footer"><div class="wrap">
-  <nav><a href="/mascotas/">Calculadora de gastos</a><a href="/mascotas/comida.html">Porción de comida</a><a href="/mascotas/razas/">Razas</a><a href="/mascotas/privacidad.html">Privacidad y afiliados</a><a href="/">Más herramientas</a></nav>
+  <nav><a href="/mascotas/">Calculadora de gastos</a><a href="/mascotas/comida.html">Porción de comida</a><a href="/mascotas/razas/">Razas</a><a href="/mascotas/guias/">Guías</a><a href="/mascotas/privacidad.html">Privacidad y afiliados</a><a href="/">Más herramientas</a></nav>
   <p>© ${YEAR} ${SITE}. Estimaciones orientativas: no sustituyen la consulta con tu veterinario. Como afiliados de Amazon obtenemos ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
 </div></footer>
 <script src="/mascotas/assets/config.js"></script>
@@ -159,6 +166,8 @@ function home() {
   <h3>Gatos</h3>
   ${breedCards("gato")}
   <div data-slot="ad" data-name="articulo"></div>
+  <h2>Guías para dueños de mascotas</h2>
+  ${guideCards(GUIDES)}
   <h2>Cómo calculamos los gastos</h2>
   <p><strong>Comida:</strong> calculamos las calorías diarias con la fórmula veterinaria RER y las convertimos a gramos según la calidad del alimento; luego multiplicamos por el precio por kilo.</p>
   <p><strong>Veterinario:</strong> consultas al año según la edad (los cachorros y seniors van más seguido) más el paquete anual de vacunas, prorrateado por mes.</p>
@@ -277,6 +286,8 @@ function breedPage(b) {
   ${faqHtml(faqs)}
   <h2>Compara con razas parecidas</h2>
   <div class="cards">${others.map(o => `<a href="/mascotas/razas/${o.slug}.html">${esc(o.name)} <small>${money(calcFor(o, MAIN_COUNTRY).monthTotal)}/mes</small></a>`).join("")}</div>
+  <h2>Guías útiles</h2>
+  ${guideCards(GUIDES.filter(g => b.species === "gato" ? !/perro/.test(g.slug) || /gato/.test(g.slug) : !/gato/.test(g.slug) || /perro/.test(g.slug)).slice(0, 4))}
   <div data-slot="newsletter"></div>
 </div>`;
   const ld = [faqLd(faqs), { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
@@ -313,6 +324,60 @@ function breedsIndex() {
   }));
 }
 
+function guidePage(g, i) {
+  const related = GUIDES.filter(x => x !== g).slice(i % (GUIDES.length - 1)).concat(GUIDES.filter(x => x !== g)).slice(0, 3);
+  // Coloca un anuncio a mitad del artículo (antes del tercer h2)
+  let n = 0;
+  const content = g.body.replace(/<h2>/g, m => (++n === 3 ? '<div data-slot="ad" data-name="articulo"></div>\n' + m : m));
+  const body = `
+<p class="breadcrumb"><a href="/mascotas/">Inicio</a> › <a href="/mascotas/guias/">Guías</a></p>
+<article class="content">
+  <section class="hero">
+    <h1>${esc(g.title)}</h1>
+    <p>${g.intro}</p>
+    <p class="byline">Actualizado: ${TODAY}</p>
+  </section>
+  ${content}
+  <h2>Preguntas frecuentes</h2>
+  ${faqHtml(g.faqs)}
+  <div data-slot="newsletter"></div>
+  <div data-slot="product"></div>
+  <p class="disclaimer">Información general y precios orientativos; no sustituye la consulta con tu médico veterinario. Algunos enlaces son de afiliado: si compras, recibimos una pequeña comisión sin costo extra para ti.</p>
+  <h2>Sigue leyendo</h2>
+  ${guideCards(related)}
+</article>`;
+  const ld = [
+    { "@context": "https://schema.org", "@type": "Article", headline: g.title, description: g.description, inLanguage: "es-MX",
+      datePublished: TODAY, dateModified: TODAY, mainEntityOfPage: BASE + "guias/" + g.slug + ".html",
+      author: { "@type": "Person", name: "Leo Esquivel" }, publisher: { "@type": "Organization", name: SITE } },
+    faqLd(g.faqs)
+  ];
+  write(`guias/${g.slug}.html`, layout({
+    title: g.title, description: g.description, pathName: `guias/${g.slug}.html`, body, jsonLd: ld, current: "guides", ogType: "article"
+  }));
+}
+
+function guidesIndex() {
+  const body = `
+<p class="breadcrumb"><a href="/mascotas/">Inicio</a> › Guías</p>
+<section class="hero">
+  <h1>Guías para dueños de perros y gatos</h1>
+  <p>Precios, calendarios de vacunas, listas de compras y consejos para cuidar a tu mascota sin gastar de más.</p>
+</section>
+<div class="content">
+  <ul class="guide-list">
+  ${GUIDES.map(g => `<li><a href="/mascotas/guias/${g.slug}.html"><strong>${esc(g.title)}</strong></a><span>${esc(g.description)}</span></li>`).join("\n  ")}
+  </ul>
+  <div data-slot="ad" data-name="articulo"></div>
+  <div data-slot="newsletter"></div>
+</div>`;
+  write("guias/index.html", layout({
+    title: "Guías para dueños de perros y gatos: precios, vacunas y consejos",
+    description: "Guías prácticas para dueños de mascotas en México: cuánto cuesta esterilizar, calendario de vacunas, qué comprar, urgencias veterinarias y cómo ahorrar.",
+    pathName: "guias/", body, current: "guides"
+  }));
+}
+
 function privacy() {
   const body = `
 <section class="hero"><h1>Privacidad y afiliados</h1></section>
@@ -335,7 +400,8 @@ function privacy() {
 }
 
 function sitemap() {
-  const urls = ["", "comida.html", "razas/", "privacidad.html"].concat(Core.BREEDS.map(b => `razas/${b.slug}.html`));
+  const urls = ["", "comida.html", "razas/", "guias/", "privacidad.html"]
+    .concat(Core.BREEDS.map(b => `razas/${b.slug}.html`), GUIDES.map(g => `guias/${g.slug}.html`));
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${BASE}${u}</loc><lastmod>${TODAY}</lastmod></url>`).join("\n")}
@@ -347,6 +413,8 @@ home();
 food();
 breedsIndex();
 Core.BREEDS.forEach(breedPage);
+GUIDES.forEach(guidePage);
+guidesIndex();
 privacy();
 sitemap();
-console.log(`Generadas ${Core.BREEDS.length + 4} páginas + sitemap.xml`);
+console.log(`Generadas ${Core.BREEDS.length + GUIDES.length + 5} páginas + sitemap.xml`);

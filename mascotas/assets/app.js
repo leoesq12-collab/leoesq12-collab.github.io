@@ -374,5 +374,7 @@
     var f = document.getElementById("food-calc");
     if (f) initFoodCalc(f);
     initSlots();
+    var links = document.querySelectorAll("a[data-amazon]");
+    for (var i = 0; i < links.length; i++) links[i].href = storeUrl(CFG.defaultCountry || "mx", links[i].getAttribute("data-amazon"));
   });
 })();
