@@ -105,7 +105,7 @@ ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script
 ${body}
 </main>
 <footer class="site-footer"><div class="wrap">
-  <nav><a href="/mascotas/">Calculadora de gastos</a><a href="/mascotas/comida.html">Porción de comida</a><a href="/mascotas/razas/">Razas</a><a href="/mascotas/guias/">Guías</a><a href="/mascotas/privacidad.html">Privacidad y afiliados</a><a href="/">Más herramientas</a></nav>
+  <nav><a href="/mascotas/">Calculadora de gastos</a><a href="/mascotas/comida.html">Porción de comida</a><a href="/mascotas/razas/">Razas</a><a href="/mascotas/guias/">Guías</a><a href="/mascotas/privacidad.html">Privacidad y afiliados</a><a href="/acerca.html">Acerca de</a><a href="/contacto.html">Contacto</a><a href="/">Más herramientas</a></nav>
   <p>© ${YEAR} ${SITE}. Estimaciones orientativas: no sustituyen la consulta con tu veterinario. Como afiliados de Amazon obtenemos ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
 </div></footer>
 <script src="/mascotas/assets/config.js"></script>
@@ -382,6 +382,7 @@ function privacy() {
   const body = `
 <section class="hero"><h1>Privacidad y afiliados</h1></section>
 <div class="content">
+  <p>Responsable: Leo Esquivel, contacto: <a href="mailto:leoesq12@gmail.com">leoesq12@gmail.com</a>. Este resumen se complementa con la <a href="/privacidad.html">política de privacidad y cookies</a> completa del sitio, que incluye tus derechos ARCO.</p>
   <h2>Datos que usamos</h2>
   <p>Las calculadoras funcionan por completo en tu navegador: no enviamos ni guardamos en ningún servidor los datos de tu mascota. Si ajustas precios, se guardan solo en tu dispositivo (almacenamiento local) para la próxima visita.</p>
   <p>Si te suscribes a nuestra lista de correo, tu email lo gestiona el proveedor de newsletters y solo lo usamos para enviarte el contenido que pediste. Puedes darte de baja en cualquier momento.</p>

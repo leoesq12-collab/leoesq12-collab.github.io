@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://leoesq12-collab.github.io/sitemap.xml
 Sitemap: https://leoesq12-collab.github.io/mascotas/sitemap.xml
