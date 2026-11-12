@@ -24,7 +24,7 @@ module.exports = function ({ Core, money, calcFor }) {
   const priceyRows = dogs.slice(-5).reverse().map(({ b, r }) =>
     `<tr><td><a href="/mascotas/razas/${b.slug}.html">${b.name}</a></td><td>${b.weight} kg</td><td>${money(r.monthTotal)}</td></tr>`).join("");
 
-  return [
+  const list = [
     /* ------------------------------------------------------------------ */
     {
       slug: "cuanto-cuesta-esterilizar-perro-gato",
@@ -427,6 +427,261 @@ module.exports = function ({ Core, money, calcFor }) {
         ["¿Qué croquetas son mejores para mi perro?", "Las que corresponden a su edad y tamaño, con una proteína animal identificada como primer ingrediente y que le sienten bien (buen peso, pelo brillante, heces firmes). Tu veterinario puede orientarte según su salud."],
         ["¿Las croquetas sin granos son mejores?", "No necesariamente. Solo son necesarias en casos específicos de alergia. Consulta con tu veterinario antes de elegir una dieta sin granos."]
       ]
+    },
+
+    /* ------------------------------------------------------------------ */
+    {
+      slug: "alimentos-toxicos-perros-gatos",
+      title: "Alimentos y plantas tóxicos para perros y gatos: lista completa y qué hacer",
+      description: "Qué alimentos, plantas y medicamentos son peligrosos para perros y gatos, qué síntomas causan y qué hacer si tu mascota comió algo tóxico.",
+      intro: "Muchas intoxicaciones ocurren en casa, con comida que para nosotros es inofensiva. Conocer la lista te puede ahorrar un susto, una urgencia veterinaria muy cara y, sobre todo, la vida de tu mascota.",
+      body: `
+<h2>Lista de alimentos peligrosos</h2>
+<div class="table-scroll"><table><thead><tr><th>Alimento</th><th>Para quién</th><th>Qué puede causar</th></tr></thead><tbody>
+<tr><td>Chocolate y cacao</td><td>Perros y gatos</td><td>Vómito, diarrea, inquietud, ritmo cardíaco acelerado, temblores y convulsiones. Cuanto más oscuro (o cacao en polvo), más peligroso.</td></tr>
+<tr><td>Xilitol (chicles y dulces “sin azúcar”, algunas cremas de cacahuate y productos de repostería)</td><td>Sobre todo perros</td><td>Baja brusca de azúcar en sangre en minutos y posible daño al hígado. Incluso pocas piezas de chicle pueden ser graves en un perro chico.</td></tr>
+<tr><td>Uvas y pasas</td><td>Perros (y probablemente gatos)</td><td>Insuficiencia renal aguda. No hay una cantidad “segura”: algunos perros enferman con muy pocas.</td></tr>
+<tr><td>Cebolla, ajo, poro y cebollín (crudos, cocidos o en polvo)</td><td>Perros y gatos (los gatos son más sensibles)</td><td>Dañan los glóbulos rojos y provocan anemia, a veces días después. Ojo con caldos, guisados y comida para bebé que los contienen.</td></tr>
+<tr><td>Nueces de macadamia</td><td>Perros</td><td>Debilidad en las patas traseras, temblores, vómito y fiebre.</td></tr>
+<tr><td>Alcohol y masa cruda con levadura</td><td>Perros y gatos</td><td>Intoxicación por alcohol; la masa además se expande en el estómago.</td></tr>
+<tr><td>Café, té y bebidas energéticas</td><td>Perros y gatos</td><td>La cafeína causa efectos parecidos a los del chocolate.</td></tr>
+<tr><td>Huesos cocidos</td><td>Perros y gatos</td><td>Se astillan y pueden perforar o bloquear el intestino.</td></tr>
+<tr><td>Leche</td><td>Muchos gatos y perros adultos</td><td>Diarrea por intolerancia a la lactosa (no es tóxica, pero es la causa de muchos malestares).</td></tr>
+<tr><td>Aguacate</td><td>Perros y gatos</td><td>Puede causar vómito o diarrea; el hueso puede provocar una obstrucción. Es mucho más peligroso para aves, conejos y caballos.</td></tr>
+</tbody></table></div>
+
+<h2>Medicamentos humanos: el peligro más subestimado</h2>
+<p>Nunca le des a tu mascota un medicamento de personas sin indicación del veterinario. Los casos más frecuentes:</p>
+<ul>
+<li><strong>Paracetamol:</strong> en gatos, una sola tableta puede ser mortal; en perros también daña el hígado.</li>
+<li><strong>Ibuprofeno, naproxeno y otros antiinflamatorios:</strong> causan úlceras en el estómago y daño a los riñones.</li>
+<li><strong>Antipulgas para perros con permetrina aplicados a gatos:</strong> provocan temblores y convulsiones.</li>
+</ul>
+<p>Guarda los medicamentos en un cajón cerrado: una tableta que cae al piso desaparece en segundos.</p>
+
+<h2>Plantas tóxicas comunes en casas de México</h2>
+<ul>
+<li><strong>Lirios (azucenas, lilis):</strong> para los gatos son de lo más peligroso que existe. Morder una hoja, lamer el polen o beber el agua del florero puede causar insuficiencia renal. Si tienes gato, mejor no tengas lirios en casa.</li>
+<li><strong>Nochebuena:</strong> su savia irrita la boca y el estómago (babeo, vómito), pero es mucho menos tóxica de lo que suele creerse.</li>
+<li><strong>Potus, dieffenbachia (“lotería”), filodendro y cuna de Moisés:</strong> irritan la boca y provocan babeo y vómito.</li>
+<li><strong>Sábila (aloe):</strong> puede causar vómito y diarrea.</li>
+<li><strong>Cícadas o palma de sagú:</strong> muy tóxica para perros (daño al hígado), sobre todo las semillas.</li>
+</ul>
+
+<h2>Qué hacer si tu mascota comió algo tóxico</h2>
+<ol>
+<li><strong>Retírale lo que quede</strong> y guarda el empaque o una foto de la planta.</li>
+<li><strong>Calcula qué y cuánto comió</strong> y a qué hora. Ten a mano su peso aproximado.</li>
+<li><strong>Llama de inmediato a tu veterinario o a una clínica 24 horas.</strong> No esperes a que aparezcan síntomas: con el xilitol, las uvas o los lirios, actuar en la primera hora cambia el pronóstico.</li>
+<li><strong>No le provoques el vómito por tu cuenta</strong> ni le des sal, leche o aceite. Algunas sustancias hacen más daño al regresar, y los remedios caseros pueden ser peligrosos. Solo el veterinario debe indicarlo.</li>
+</ol>
+<p>Una intoxicación atendida en urgencias puede costar varios miles de pesos (consulta la <a href="/mascotas/guias/cuanto-cuesta-una-urgencia-veterinaria.html">guía de urgencias veterinarias</a>). La prevención es gratis: guarda la basura en un bote con tapa y pide a las visitas que no le den comida de la mesa.</p>
+
+<h2>Premios seguros</h2>
+<p>Si quieres compartir algo, hay opciones seguras en porciones pequeñas para la mayoría de los perros: zanahoria, pepino, manzana sin semillas, plátano y pollo cocido sin sal ni condimentos. Los premios no deberían pasar del 10 % de sus calorías diarias; descuéntalos de su porción con la ${food}.</p>`,
+      faqs: [
+        ["¿Cuánto chocolate es peligroso para un perro?", "Depende del tipo de chocolate y del peso del perro: el cacao en polvo y el chocolate amargo son mucho más peligrosos que el de leche. Ante cualquier cantidad, llama al veterinario con el empaque a la mano."],
+        ["¿Mi perro puede comer uvas?", "No. Las uvas y las pasas pueden causar insuficiencia renal aguda en perros, incluso en cantidades pequeñas."],
+        ["¿Debo provocarle el vómito si comió algo tóxico?", "No por tu cuenta. Llama primero al veterinario: en algunos casos el vómito empeora el daño y los remedios caseros pueden ser peligrosos."]
+      ],
+      sources: [
+        ["ASPCA Animal Poison Control Center", "https://www.aspca.org/"],
+        ["Manual Merck de Veterinaria (Toxicología)", "https://www.merckvetmanual.com/"]
+      ]
+    },
+
+    /* ------------------------------------------------------------------ */
+    {
+      slug: "sobrepeso-en-perros-y-gatos",
+      title: "¿Mi perro o gato tiene sobrepeso? Cómo saberlo y cómo ayudarlo a bajar de peso",
+      description: "Aprende a usar la escala de condición corporal, cuáles son los riesgos de la obesidad en mascotas y cómo hacer una dieta segura para tu perro o gato.",
+      intro: "La obesidad es uno de los problemas de salud más comunes en perros y gatos de casa, y muchas veces los dueños no lo notan: nos acostumbramos a verlos “llenitos”. La buena noticia es que se puede revisar en casa en un minuto.",
+      body: `
+<h2>La escala de condición corporal (1 a 9)</h2>
+<p>Los veterinarios no se fijan solo en los kilos: usan una escala de condición corporal del 1 (muy delgado) al 9 (obesidad severa). Lo ideal es un <strong>4 o 5</strong>.</p>
+<div class="table-scroll"><table><thead><tr><th>Puntaje</th><th>Cómo se ve y se siente</th></tr></thead><tbody>
+<tr><td>1 – 3 (delgado)</td><td>Las costillas, la columna y los huesos de la cadera se ven a simple vista. Poca o ninguna grasa.</td></tr>
+<tr><td>4 – 5 (ideal)</td><td>Las costillas se sienten fácilmente al pasar la mano, con una capa fina de grasa. Desde arriba se nota la cintura detrás de las costillas; de lado, el abdomen va “recogido” hacia arriba.</td></tr>
+<tr><td>6 – 7 (sobrepeso)</td><td>Cuesta sentir las costillas; la cintura apenas se nota o no se ve. Hay grasa sobre la base de la cola.</td></tr>
+<tr><td>8 – 9 (obesidad)</td><td>No se sienten las costillas sin apretar fuerte. No hay cintura, el abdomen cuelga y hay depósitos de grasa en el cuello y la cadera.</td></tr>
+</tbody></table></div>
+<p>Como regla aproximada, <strong>cada punto por encima de 5 equivale a un 10 % de peso de más</strong>. Un perro de 22 kg con puntaje 7 probablemente debería pesar unos 18 kg.</p>
+
+<h2>Prueba rápida en casa</h2>
+<ol>
+<li><strong>Costillas:</strong> pasa las palmas por sus costados con la presión con la que te tocarías el dorso de la mano. Si sientes las costillas así de fácil, va bien. Si tienes que apretar, sobra grasa.</li>
+<li><strong>Vista desde arriba:</strong> debe tener forma de reloj de arena, con la cintura marcada.</li>
+<li><strong>Vista de lado:</strong> el abdomen debe subir detrás del pecho, no ir en línea recta ni colgar.</li>
+</ol>
+<p>En gatos es normal una pequeña “bolsita” de piel suelta en la parte baja del abdomen; eso no es grasa. Lo que cuenta son las costillas y la cintura.</p>
+
+<h2>Por qué importa</h2>
+<ul>
+<li><strong>Vive menos:</strong> en un estudio de 14 años con Labradores, los perros que se mantuvieron delgados vivieron en promedio casi dos años más que sus hermanos que comían más.</li>
+<li><strong>Artrosis y dolor articular</strong>, sobre todo en razas grandes como el ${breed("labrador-retriever")} o el ${breed("golden-retriever")}.</li>
+<li><strong>Diabetes</strong>, especialmente en gatos con sobrepeso.</li>
+<li><strong>Problemas respiratorios</strong>, que empeoran mucho en razas de nariz chata como el ${breed("pug")} y el ${breed("bulldog-frances")}.</li>
+<li><strong>Más gasto:</strong> come más y necesita más consultas y medicamentos.</li>
+</ul>
+
+<h2>Cómo ayudarlo a bajar de peso de forma segura</h2>
+<ol>
+<li><strong>Revisión con el veterinario.</strong> Descarta enfermedades como el hipotiroidismo y define un peso meta.</li>
+<li><strong>Calcula su porción para el peso meta, no para el actual.</strong> Con la ${food} escribe el peso ideal y elige actividad “Baja”.</li>
+<li><strong>Pesa la comida con una ${amz("báscula de cocina", "bascula cocina digital gramos")}.</strong> Una “taza” puede variar hasta un 20 %.</li>
+<li><strong>Cuenta los premios</strong> (máximo 10 % de las calorías) y pide a toda la familia que no le den comida de la mesa.</li>
+<li><strong>Más movimiento:</strong> paseos más largos para los perros; para los gatos, 2 o 3 sesiones de juego de 10 minutos al día con una caña o un ${amz("juguete dispensador de comida", "juguete dispensador croquetas")}.</li>
+<li><strong>Ritmo lento:</strong> lo recomendable es perder alrededor del 1 % de su peso por semana. Pésalo cada 2 a 4 semanas.</li>
+</ol>
+<p><strong>Importante en gatos:</strong> nunca les quites la comida de golpe ni los pongas a “dieta estricta” por tu cuenta. Un gato con sobrepeso que deja de comer unos días puede desarrollar lipidosis hepática (hígado graso), una enfermedad grave. Siempre bajo supervisión veterinaria.</p>`,
+      faqs: [
+        ["¿Cómo sé si mi perro está gordo?", "Si al pasar la mano por sus costados no sientes las costillas con facilidad y no se le nota la cintura vista desde arriba, probablemente tiene sobrepeso. Tu veterinario puede confirmarlo con la escala de condición corporal."],
+        ["¿Cuánto peso puede bajar un perro por semana?", "Lo recomendable es alrededor del 1 % de su peso corporal por semana, con un plan supervisado por el veterinario."],
+        ["¿Puedo poner a dieta a mi gato?", "Sí, pero con supervisión veterinaria y de forma gradual. Dejar a un gato sin comer o reducir su comida bruscamente puede causarle lipidosis hepática."]
+      ],
+      sources: [
+        ["WSAVA: guías globales de nutrición y escala de condición corporal", "https://wsava.org/"],
+        ["Kealy RD et al. (2002). Effects of diet restriction on life span and age-related changes in dogs. JAVMA 220(9)", "https://avmajournals.avma.org/"]
+      ]
+    },
+
+    /* ------------------------------------------------------------------ */
+    {
+      slug: "desparasitacion-perros-gatos",
+      title: "Desparasitación de perros y gatos: cada cuánto, qué productos usar y cuánto cuesta",
+      description: "Calendario de desparasitación interna y externa para cachorros, gatitos y adultos, los parásitos más comunes en México y precio aproximado de los tratamientos.",
+      intro: "Los parásitos no solo dan comezón: algunos causan anemia, diarrea o enfermedades graves transmitidas por garrapatas, y otros pueden contagiar a las personas, sobre todo a los niños. Desparasitar a tiempo es barato comparado con tratar las consecuencias.",
+      body: `
+<h2>Parásitos internos y externos</h2>
+<ul>
+<li><strong>Internos:</strong> lombrices intestinales (como <em>Toxocara</em>, que también puede infectar a personas), anquilostomas, tenias y protozoarios como la giardia. Se tratan con desparasitantes en tableta, pasta o suspensión.</li>
+<li><strong>Externos:</strong> pulgas, garrapatas y ácaros. Se previenen con pipetas, collares o tabletas masticables.</li>
+</ul>
+<p>En gran parte de México, la <strong>garrapata café del perro</strong> transmite la ehrlichiosis, una enfermedad que puede causar fiebre, anemia y sangrados. Por eso la protección contra garrapatas suele ser necesaria todo el año.</p>
+
+<h2>Calendario de desparasitación interna</h2>
+<div class="table-scroll"><table><thead><tr><th>Etapa</th><th>Perros</th><th>Gatos</th></tr></thead><tbody>
+<tr><td>Cachorros / gatitos</td><td>Desde las 2 semanas de vida, cada 2 semanas hasta 2 semanas después del destete; luego cada mes hasta los 6 meses</td><td>Desde las 3 semanas de vida, cada 2 semanas hasta 2 semanas después del destete; luego cada mes hasta los 6 meses</td></tr>
+<tr><td>Adultos con riesgo bajo o desconocido</td><td>Al menos 4 veces al año</td><td>Al menos 4 veces al año</td></tr>
+<tr><td>Adultos con riesgo alto (comen presas o basura, conviven con niños pequeños, van a parques y guarderías)</td><td>Cada mes, o según el veterinario</td><td>Cada mes, o según el veterinario</td></tr>
+<tr><td>Hembras gestantes o lactando</td><td colspan="2">Solo con el producto y el esquema que indique el veterinario</td></tr>
+</tbody></table></div>
+<p>Es el esquema que recomiendan organizaciones como ESCCAP. Tu veterinario puede ajustarlo con un análisis de heces (coproparasitoscópico).</p>
+
+<h2>Protección contra pulgas y garrapatas</h2>
+<div class="table-scroll"><table><thead><tr><th>Tipo</th><th>Duración típica</th><th>Ventajas y precauciones</th></tr></thead><tbody>
+<tr><td>Pipeta (gotas en la piel)</td><td>1 mes</td><td>Fácil de aplicar. No bañes a tu mascota dos días antes ni dos después.</td></tr>
+<tr><td>Tableta masticable</td><td>1 a 3 meses, según el producto</td><td>No se quita con el baño. Debe ser la dosis exacta para su peso.</td></tr>
+<tr><td>Collar</td><td>Varios meses</td><td>Económico a largo plazo. Revisa que no le irrite el cuello.</td></tr>
+</tbody></table></div>
+<p><strong>Regla de oro con gatos:</strong> usa solo productos para gatos. Los antipulgas para perros con permetrina pueden ser mortales para ellos.</p>
+<p>Cuando compres, elige siempre la presentación que corresponde a su peso; si está en el límite entre dos rangos, pregunta al veterinario. Comprar ${amz("antipulgas en paquete de varias dosis", "antipulgas perro tabletas")} reduce el costo por mes.</p>
+
+<h2>¿Cuánto cuesta desparasitar?</h2>
+<div class="table-scroll"><table><thead><tr><th>Producto</th><th>Precio aproximado por dosis en México</th></tr></thead><tbody>
+<tr><td>Desparasitante interno (tableta o suspensión)</td><td>$80 – $300, según el peso</td></tr>
+<tr><td>Pipeta antipulgas</td><td>$150 – $400</td></tr>
+<tr><td>Tableta masticable contra pulgas y garrapatas</td><td>$300 – $700, según el peso y la duración</td></tr>
+<tr><td>Análisis de heces</td><td>$200 – $450</td></tr>
+</tbody></table></div>
+<p>El costo mensual de la protección ya está incluido en la ${calc}, ajustado al tamaño de tu mascota.</p>
+
+<h2>Señales de que tu mascota tiene parásitos</h2>
+<ul>
+<li>Se rasca mucho, se muerde la base de la cola o ves “polvo negro” en su pelo (excremento de pulga).</li>
+<li>Diarrea, vómito, panza inflada (muy típico en cachorros) o lombrices visibles en las heces.</li>
+<li>Pérdida de peso o pelo opaco a pesar de comer bien.</li>
+<li>Arrastra la cola por el piso (puede ser parásitos o glándulas anales).</li>
+<li>Garrapatas en orejas, entre los dedos o en el cuello. Retíralas con unas pinzas finas, tirando firme y recto, sin aplastarlas.</li>
+</ul>
+
+<h2>Cuida también a tu familia</h2>
+<p>Algunas lombrices de perros y gatos pueden infectar a las personas. Recoge las heces todos los días, lávate las manos después de jugar con tu mascota y en el arenero, y no dejes que los niños jueguen en areneros públicos sin supervisión.</p>`,
+      faqs: [
+        ["¿Cada cuánto se desparasita a un perro adulto?", "Al menos 4 veces al año para la desparasitación interna, o cada mes si tiene un riesgo alto. La protección contra pulgas y garrapatas suele ser mensual o según la duración del producto."],
+        ["¿Cuándo se desparasita a un cachorro por primera vez?", "Los cachorros de perro desde las 2 semanas de vida y los gatitos desde las 3 semanas, repitiendo cada 2 semanas en los primeros meses."],
+        ["¿Puedo usar el antipulgas de mi perro en mi gato?", "No. Algunos antipulgas para perros contienen permetrina, que es tóxica para los gatos. Usa siempre productos específicos para gatos."]
+      ],
+      sources: [
+        ["ESCCAP: guías de control de parásitos en perros y gatos", "https://www.esccap.org/"],
+        ["WSAVA: recomendaciones de medicina preventiva", "https://wsava.org/"]
+      ]
+    },
+
+    /* ------------------------------------------------------------------ */
+    {
+      slug: "como-adoptar-perro-gato-mexico",
+      title: "Cómo adoptar un perro o un gato en México: paso a paso, requisitos y costos",
+      description: "Dónde adoptar, qué piden los refugios, cuánto cuesta la cuota de adopción y cómo preparar tu casa y tu presupuesto antes de que llegue tu nueva mascota.",
+      intro: "Adoptar es una de las mejores decisiones que puedes tomar: le das una segunda oportunidad a un animal y casi siempre te sale más barato que comprar. Esta guía te explica cómo funciona el proceso y qué pensar antes de decir que sí.",
+      body: `
+<h2>Antes de adoptar: 6 preguntas honestas</h2>
+<ol>
+<li><strong>¿Tengo tiempo?</strong> Un perro necesita paseos diarios y compañía; un gato es más independiente, pero también necesita juego y atención.</li>
+<li><strong>¿Me alcanza?</strong> Un perro o gato vive de 10 a 15 años o más. Calcula su gasto mensual y de por vida con la ${calc} antes de decidir.</li>
+<li><strong>¿Mi casa lo permite?</strong> Revisa el reglamento del edificio o tu contrato de renta, y si tienes ventanas o balcones que proteger.</li>
+<li><strong>¿Alguien en casa tiene alergias?</strong> Si es así, conviene convivir con un animal antes de adoptar.</li>
+<li><strong>¿Qué haré en vacaciones?</strong> Piensa quién lo cuidará o cuánto cuesta una pensión.</li>
+<li><strong>¿Cachorro o adulto?</strong> Un cachorro requiere educación, más vacunas y paciencia. Un adulto ya tiene su carácter definido, y lo que ves es lo que hay.</li>
+</ol>
+
+<h2>Dónde adoptar</h2>
+<ul>
+<li><strong>Refugios y asociaciones protectoras:</strong> suelen entregar a los animales vacunados, desparasitados y esterilizados, y conocen bien su carácter.</li>
+<li><strong>Centros de atención o control animal de tu municipio:</strong> muchos tienen programas de adopción, a veces sin costo.</li>
+<li><strong>Jornadas o ferias de adopción:</strong> se anuncian en las redes sociales de refugios y gobiernos locales.</li>
+<li><strong>Rescatistas independientes:</strong> hacen una labor enorme. Pide ver al animal en persona y desconfía de quien te presione para decidir rápido o te pida depósitos antes de conocerlo.</li>
+</ul>
+
+<h2>Cómo es el proceso</h2>
+<ol>
+<li><strong>Solicitud o cuestionario:</strong> te preguntarán por tu casa, tu rutina, otras mascotas y experiencia previa. No es para juzgarte, sino para encontrar el animal adecuado.</li>
+<li><strong>Entrevista y visita:</strong> algunas asociaciones visitan tu casa o piden fotos de dónde vivirá.</li>
+<li><strong>Convivencia:</strong> es recomendable que conozcas al animal más de una vez y, si tienes otro perro, que se conozcan en terreno neutral.</li>
+<li><strong>Contrato de adopción:</strong> normalmente te comprometes a esterilizarlo (si aún no lo está), a no venderlo y a avisar si ya no puedes cuidarlo.</li>
+<li><strong>Cuota de recuperación:</strong> es común que se pida una cuota que ayuda a cubrir vacunas, esterilización y alimento. Varía mucho según la organización y lo que incluye: desde nada hasta unos cientos o algunos miles de pesos.</li>
+</ol>
+
+<h2>Lo que conviene preguntar al refugio</h2>
+<ul>
+<li>¿Qué vacunas tiene y cuándo toca el siguiente refuerzo? ¿Está desparasitado?</li>
+<li>¿Está esterilizado? Si no, ¿quién paga la cirugía y cuándo se hace?</li>
+<li>¿Cómo se lleva con niños, otros perros y gatos?</li>
+<li>¿Tiene algún problema de salud o de comportamiento conocido?</li>
+<li>¿Qué come actualmente? (para hacer el cambio de alimento poco a poco).</li>
+</ul>
+
+<h2>Los primeros días en casa</h2>
+<p>Muchos refugios usan la <strong>regla 3-3-3</strong> como guía: los primeros <strong>3 días</strong> el animal suele estar asustado y puede no comer bien; en <strong>3 semanas</strong> empieza a conocer la rutina; y hacia los <strong>3 meses</strong> se siente realmente en casa. Ten paciencia y no lo satures con visitas.</p>
+<ul>
+<li>Prepara lo básico antes de que llegue: revisa la lista de compras para <a href="/mascotas/guias/que-comprar-para-un-perro-nuevo.html">perros</a> o para <a href="/mascotas/guias/que-comprar-para-un-gato-nuevo.html">gatos</a>.</li>
+<li>Agenda una visita al veterinario en la primera semana, aunque se vea sano.</li>
+<li>Ponle collar con placa de identificación desde el primer día: los animales recién adoptados son los que más se escapan.</li>
+<li>Considera el microchip, que ayuda a recuperarlo si se pierde.</li>
+</ul>
+
+<h2>¿Adoptar o comprar?</h2>
+<p>Si buscas una raza específica, investiga primero: muchas razas tienen grupos de rescate dedicados. Si decides comprar, evita la venta en la calle, en tianguis o por redes sociales sin poder conocer a los padres. Los criaderos irregulares venden animales enfermos o sin vacunar, y esos gastos veterinarios los terminas pagando tú.</p>`,
+      faqs: [
+        ["¿Cuánto cuesta adoptar un perro en México?", "Depende de la organización: algunas adopciones son gratuitas y otras piden una cuota de recuperación que puede ir de unos cientos a algunos miles de pesos, y que suele incluir vacunas, desparasitación y esterilización."],
+        ["¿Qué requisitos piden para adoptar?", "Normalmente ser mayor de edad, presentar una identificación y comprobante de domicilio, llenar un cuestionario y firmar un contrato de adopción. Algunas asociaciones hacen una entrevista o visita al domicilio."],
+        ["¿Es mejor adoptar un cachorro o un adulto?", "Depende de tu tiempo y experiencia. Un cachorro necesita más educación y vacunas; un adulto ya tiene su carácter y tamaño definidos, por lo que es más fácil saber si se adaptará a tu casa."]
+      ],
+      sources: []
+
     }
   ];
+
+  // Fuentes de las guías que no las declaran en su propio objeto.
+  const SOURCES = {
+    "cuanto-cuesta-esterilizar-perro-gato": [["WSAVA: guías globales de medicina preventiva", "https://wsava.org/"], ["AAHA (American Animal Hospital Association)", "https://www.aaha.org/"]],
+    "calendario-vacunas-perro": [["WSAVA: guías de vacunación para perros y gatos", "https://wsava.org/"], ["Secretaría de Salud: Jornada Nacional de Vacunación Antirrábica", "https://www.gob.mx/salud"]],
+    "calendario-vacunas-gato": [["WSAVA: guías de vacunación para perros y gatos", "https://wsava.org/"], ["Secretaría de Salud: Jornada Nacional de Vacunación Antirrábica", "https://www.gob.mx/salud"]],
+    "que-comprar-para-un-gato-nuevo": [["ASPCA: lista de plantas tóxicas para gatos", "https://www.aspca.org/"]],
+    "razas-de-perro-mas-baratas-de-mantener": [["Cálculo propio con la metodología de nuestra calculadora de gastos", "/mascotas/#metodologia"]],
+    "cuanto-cuesta-una-urgencia-veterinaria": [["Manual Merck de Veterinaria (urgencias y toxicología)", "https://www.merckvetmanual.com/"]],
+    "como-ahorrar-en-gastos-de-mascota": [["WSAVA: guías globales de nutrición", "https://wsava.org/"]],
+    "como-elegir-croquetas": [["WSAVA: guías globales de nutrición", "https://wsava.org/"], ["National Research Council (2006). Nutrient Requirements of Dogs and Cats", "https://nap.nationalacademies.org/"]]
+  };
+  return list.map(g => Object.assign({}, g, { sources: g.sources && g.sources.length ? g.sources : (SOURCES[g.slug] || []) }));
 };

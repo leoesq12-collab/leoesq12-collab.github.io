@@ -66,7 +66,7 @@ function guideCards(list) {
 
 function article(b) { return b.species === "gato" ? "un gato " + b.name.replace(/^Gato /, "") : "un " + b.name; }
 
-function layout({ title, description, pathName, body, jsonLd, current, extraHead, ogType }) {
+function layout({ title, description, pathName, body, jsonLd, current, extraHead, ogType, noindex }) {
   const url = BASE + pathName;
   return `<!DOCTYPE html>
 <html lang="es-MX">
@@ -75,6 +75,7 @@ function layout({ title, description, pathName, body, jsonLd, current, extraHead
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
+${noindex ? '<meta name="robots" content="noindex,follow">\n' : ""}
 <link rel="canonical" href="${url}">
 <meta property="og:type" content="${ogType || "website"}">
 <meta property="og:site_name" content="${SITE}">
@@ -124,11 +125,6 @@ function faqLd(items) {
     mainEntity: items.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a.replace(/<[^>]+>/g, "") } })) };
 }
 
-function breedCards(species) {
-  return `<div class="cards">${Core.BREEDS.filter(b => b.species === species).map(b =>
-    `<a href="/mascotas/razas/${b.slug}.html">${esc(b.name)} <small>${money(calcFor(b, MAIN_COUNTRY).monthTotal)}/mes</small></a>`).join("")}</div>`;
-}
-
 function write(rel, content) {
   const file = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -159,16 +155,12 @@ function home() {
 </section>
 <section class="calc" id="calc" aria-label="Calculadora de gastos de mascota"><noscript>Activa JavaScript para usar la calculadora.</noscript></section>
 <div class="content">
-  <h2>Costos por raza</h2>
-  <p>Gasto mensual estimado en México (adulto, esterilizado, alimento de gama media). Entra a cada raza para ver el detalle y sus gastos típicos de salud.</p>
-  <h3>Perros</h3>
-  ${breedCards("perro")}
-  <h3>Gatos</h3>
-  ${breedCards("gato")}
-  <div data-slot="ad" data-name="articulo"></div>
   <h2>Guías para dueños de mascotas</h2>
   ${guideCards(GUIDES)}
-  <h2>Cómo calculamos los gastos</h2>
+  <div data-slot="ad" data-name="articulo"></div>
+  <h2>Costos por raza</h2>
+  <p>El tamaño es lo que más cambia el presupuesto: un perro gigante come y se medica por peso, así que puede costar más del triple que uno chico. Consulta el <a href="/mascotas/razas/">ranking de costos de ${Core.BREEDS.length} razas de perros y gatos</a> o elige la raza de tu mascota en la calculadora de arriba.</p>
+  <h2 id="metodologia">Cómo calculamos los gastos</h2>
   <p><strong>Comida:</strong> calculamos las calorías diarias con la fórmula veterinaria RER y las convertimos a gramos según la calidad del alimento; luego multiplicamos por el precio por kilo.</p>
   <p><strong>Veterinario:</strong> consultas al año según la edad (los cachorros y seniors van más seguido) más el paquete anual de vacunas, prorrateado por mes.</p>
   <p><strong>Antipulgas, estética y accesorios:</strong> se ajustan al tamaño y tipo de pelo, porque los medicamentos se dosifican por peso y los perros grandes o de pelo largo cuestan más en la estética.</p>
@@ -297,7 +289,7 @@ function breedPage(b) {
   write(`razas/${b.slug}.html`, layout({
     title: `¿Cuánto cuesta tener ${who}? Gastos al mes y de por vida (${YEAR})`,
     description: `Mantener ${who} cuesta aprox. ${money(r.monthTotal)} al mes en México. Desglose de comida, veterinario y estética, costo de por vida y en otros países.`,
-    pathName: `razas/${b.slug}.html`, body, jsonLd: ld, current: "breeds"
+    pathName: `razas/${b.slug}.html`, body, jsonLd: ld, current: "breeds", noindex: true
   }));
 }
 
@@ -314,6 +306,11 @@ function breedsIndex() {
   ${rows.map(({ b, r }) => `<tr><td><a href="/mascotas/razas/${b.slug}.html">${esc(b.name)}</a> ${b.species === "gato" ? "🐱" : "🐶"}</td><td>${money(r.monthTotal)}</td><td>${money(r.lifetime)}</td></tr>`).join("\n  ")}
   </tbody></table></div>
   <p>Estimación para un ejemplar adulto esterilizado, con alimento de gama media y estética incluida. <a href="/mascotas/">Personaliza el cálculo</a> con la edad, actividad y precios de tu ciudad.</p>
+  <h2>Por qué unas razas cuestan más que otras</h2>
+  <p><strong>El peso manda.</strong> La comida, los antipulgas y casi todos los medicamentos se dosifican por kilo, así que un Gran Danés de 60 kg gasta en eso varias veces lo que un Chihuahua de 2.5 kg.</p>
+  <p><strong>El pelo cuenta.</strong> Las razas de pelo largo o que no mudan (Caniche, Shih Tzu, Yorkshire, Schnauzer) necesitan corte profesional cada 4 a 8 semanas, un gasto que los perros de pelo corto casi no tienen.</p>
+  <p><strong>La salud de la raza no aparece en el gasto mensual,</strong> pero pesa mucho a lo largo de su vida. Las razas de nariz chata (Pug, Bulldog Francés, Bulldog Inglés, Persa) tienen más problemas respiratorios, de piel y de ojos, y las grandes son más propensas a la displasia de cadera. Para ellas, un fondo de emergencias o un seguro es casi obligatorio: lee <a href="/mascotas/guias/cuanto-cuesta-una-urgencia-veterinaria.html">cuánto cuesta una urgencia veterinaria</a>.</p>
+  <p><strong>Los mestizos suelen salir más baratos:</strong> la adopción es gratuita o de bajo costo y, en general, tienen menos enfermedades hereditarias. Si estás pensando en sumar uno a tu familia, revisa la <a href="/mascotas/guias/como-adoptar-perro-gato-mexico.html">guía para adoptar en México</a>.</p>
   <div data-slot="ad" data-name="articulo"></div>
   <div data-slot="newsletter"></div>
 </div>`;
@@ -335,11 +332,14 @@ function guidePage(g, i) {
   <section class="hero">
     <h1>${esc(g.title)}</h1>
     <p>${g.intro}</p>
-    <p class="byline">Actualizado: ${TODAY}</p>
+    <p class="byline">Por <a href="/acerca.html">Leo Esquivel</a> · Actualizado: ${TODAY}</p>
   </section>
   ${content}
   <h2>Preguntas frecuentes</h2>
   ${faqHtml(g.faqs)}
+  ${g.sources.length ? `<h2>Fuentes</h2>
+  <ul class="sources">${g.sources.map(([name, url]) => `<li><a href="${url}"${url.startsWith("http") ? ' rel="noopener" target="_blank"' : ""}>${esc(name)}</a></li>`).join("")}</ul>` : ""}
+  <aside class="author-box"><strong>Sobre esta guía</strong><p>Escrita por <a href="/acerca.html">Leo Esquivel</a>, creador de las calculadoras de este sitio, a partir de guías de organizaciones veterinarias reconocidas y precios de referencia en México. Si encuentras un dato desactualizado, <a href="/contacto.html">escríbeme</a> y lo corrijo.</p></aside>
   <div data-slot="newsletter"></div>
   <div data-slot="product"></div>
   <p class="disclaimer">Información general y precios orientativos; no sustituye la consulta con tu médico veterinario. Algunos enlaces son de afiliado: si compras, recibimos una pequeña comisión sin costo extra para ti.</p>
@@ -402,7 +402,7 @@ function privacy() {
 
 function sitemap() {
   const urls = ["", "comida.html", "razas/", "guias/", "privacidad.html"]
-    .concat(Core.BREEDS.map(b => `razas/${b.slug}.html`), GUIDES.map(g => `guias/${g.slug}.html`));
+    .concat(GUIDES.map(g => `guias/${g.slug}.html`));
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${BASE}${u}</loc><lastmod>${TODAY}</lastmod></url>`).join("\n")}
