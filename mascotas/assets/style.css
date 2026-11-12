@@ -152,6 +152,9 @@ input:focus-visible, select:focus-visible, .seg input:focus-visible + span, .btn
 .guide-list span { color: var(--muted); font-size: .92rem; }
 .content ul, .content ol { padding-left: 22px; }
 .content li { margin-bottom: 6px; }
+.sources { font-size: .92rem; }
+.author-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin: 26px 0 0; }
+.author-box p { margin: 6px 0 0; color: var(--muted); font-size: .93rem; }
 details.faq { border-bottom: 1px solid var(--line); padding: 10px 0; }
 details.faq summary { cursor: pointer; font-weight: 700; }
 
